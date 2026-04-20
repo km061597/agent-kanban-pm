@@ -1,0 +1,25 @@
+app = 'agent-kanban-pm-kylemetzger'
+primary_region = 'lax'
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8000"
+  PYTHONUNBUFFERED = "1"
+  DATABASE_URL = "sqlite+aiosqlite:////data/agent_kanban.db"
+
+[[mounts]]
+  source = 'agent_kanban_data'
+  destination = '/data'
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '512mb'
